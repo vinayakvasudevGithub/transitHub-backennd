@@ -1,22 +1,34 @@
 const mongoose = require("mongoose");
 
-const stations = new mongoose.Schema({
-  station: String,
-  city: String,
-  district: String,
-  state: String,
-  arrivaltime: String,
-  departureTime: String,
+// Schema for travel class details
+const travelClassDetails = new mongoose.Schema({
+  classType: { type: String, required: true },
+  minimumDistance: { type: Number, required: true },
+  basicFare: { type: Number, required: true },
 });
 
+// Schema for different travel classes
+
+// Schema for stations
+const stationSchema = new mongoose.Schema({
+  station: { type: String, required: true },
+  stationCode: { type: String, required: true },
+  city: { type: String, required: true },
+  district: { type: String, required: true },
+  state: { type: String, required: true },
+  arrivalDate: { type: Date, required: true },
+  arrivalTime: { type: String, required: true },
+  departureDate: { type: Date, required: true },
+  departureTime: { type: String, required: true },
+});
+
+// Main schema for train details
 const trainSchema = new mongoose.Schema({
-  trainname: String,
-  trainnumber: String,
-  category: String,
-  stations: [stations],
-  seats: Number,
-  departureDateTime: String,
-  arrivalDateTime: String,
+  trainName: { type: String, required: true },
+  trainNumber: { type: String, required: true, unique: true },
+  category: { type: String, required: true },
+  stations: [stationSchema], // Embedded array of station details
+  classes: [travelClassDetails], // Referencing the class schema
 });
 
-module.exports = mongoose.model("traindata", trainSchema);
+module.exports = mongoose.model("TrainData", trainSchema);

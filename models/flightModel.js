@@ -1,50 +1,52 @@
 const mongoose = require("mongoose");
 
 const origin = new mongoose.Schema({
-  Code: String,
+  code: String,
   name: String,
   city: String,
   country: String,
-  departureDate: String,
-  departureTime: String,
+  // departureDate: String,
+  // departureTime: String,
 });
 
 const destination = new mongoose.Schema({
-  Code: String,
+  code: String,
   name: String,
   city: String,
   country: String,
-  arrivalDate: String,
-  arrivalTime: String,
+  // arrivalDate: String,
+  // arrivalTime: String,
 });
 
 const prices = new mongoose.Schema({
   ecconomy: Number,
   premiumEcconomy: Number,
   bussiness: Number,
-  firstclass: Number,
+  // firstclass: Number,
 });
 
 const seats = new mongoose.Schema({
   ecconomy: Number,
   premiumEcconomy: Number,
   bussiness: Number,
-  firstclass: Number,
+  // firstclass: Number,
 });
 
 const flightSchema = new mongoose.Schema({
   airline: String,
   airlineimagecode: String,
-  flightNumber: { type: String, required: true },
+  flightNumber: String,
   airport: [origin],
   destination: [destination],
+  departureDate: String,
   departureDateTime: String,
+  arrivalDate: String,
   arrivalDateTime: String,
   duration: Number,
   aircraft: String,
-  travelclass: [{ type: String, required: true }],
+  travelclass: [{ type: String }],
   prices: [prices],
-  taxes: Number,
+  // taxes: Number,
   seats: [seats],
 });
 

@@ -12,6 +12,9 @@ app.use(cors());
 app.use("/flight", require("./routes/flightRoutes"));
 app.use("/bus", require("./routes/busRoutes"));
 app.use("/train", require("./routes/trainRoutes"));
+app.use("/busticket", require("./ticket-routes/BusTicketRoute"));
+app.use("/flightticket", require("./ticket-routes/FlightTicketRoute"));
+app.use("/trainticket", require("./ticket-routes/TrainTicketRoute"));
 app.use(errorHandler);
 
 app.listen(port, () => {
