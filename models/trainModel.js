@@ -16,9 +16,9 @@ const stationSchema = new mongoose.Schema({
   city: { type: String, required: true },
   district: { type: String, required: true },
   state: { type: String, required: true },
-  arrivalDate: { type: Date, required: true },
+  arrivalDate: { type: String, required: true },
   arrivalTime: { type: String, required: true },
-  departureDate: { type: Date, required: true },
+  departureDate: { type: String, required: true },
   departureTime: { type: String, required: true },
 });
 
