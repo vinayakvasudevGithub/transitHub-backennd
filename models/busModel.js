@@ -15,12 +15,18 @@ const seatdetails = new mongoose.Schema({
   seats: [],
 });
 
+const prices = new mongoose.Schema({
+  minimumfare: Number,
+  perkilometre: Number,
+});
+
 const busSchema = new mongoose.Schema({
   busname: String,
   busnumber: String,
   bustype: String,
   stations: [stations],
   seatdetails: [seatdetails],
+  ticketprices: [prices],
 });
 
 module.exports = mongoose.model("busdata", busSchema);
