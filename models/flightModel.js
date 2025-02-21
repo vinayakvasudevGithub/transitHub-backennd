@@ -5,8 +5,8 @@ const origin = new mongoose.Schema({
   name: String,
   city: String,
   country: String,
-  // departureDate: String,
-  // departureTime: String,
+  departureDate: String,
+  departureTime: String,
 });
 
 const destination = new mongoose.Schema({
@@ -14,8 +14,8 @@ const destination = new mongoose.Schema({
   name: String,
   city: String,
   country: String,
-  // arrivalDate: String,
-  // arrivalTime: String,
+  arrivalDate: String,
+  arrivalTime: String,
 });
 
 const prices = new mongoose.Schema({

@@ -13,17 +13,32 @@ const BusBySearch = asyncHandler(async (req, res) => {
   } = req;
 
   const filteredBus = data.filter((result) => {
+    let departureIndex = -1;
+    let arrivalIndex = -1;
+
     const isDepartureMatch = from
-      ? result.stations.some(
-          (stations) => stations.city.toLowerCase() === from.toLowerCase()
-        )
+      ? result.stations.some((stations, index) => {
+          if (stations.city.toLowerCase() === from.toLowerCase()) {
+            departureIndex = index;
+            return true;
+          }
+          return false;
+        })
       : true;
+
     const isArrivalMatch = to
-      ? result.stations.some(
-          (stations) => stations.city.toLowerCase() === to.toLowerCase()
-        )
+      ? result.stations.some((stations, index) => {
+          if (stations.city.toLowerCase() === to.toLowerCase()) {
+            arrivalIndex = index;
+            return true;
+          }
+          return false;
+        })
       : true;
-    return isDepartureMatch, isArrivalMatch;
+
+    const isCorrectOrder = arrivalIndex > departureIndex;
+
+    return isDepartureMatch && isArrivalMatch && isCorrectOrder;
   });
 
   filteredBus.length > 0
