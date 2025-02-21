@@ -8,6 +8,8 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use("/bus", require("./routes/busRoutes"));
+app.use("/flight", require("./routes/flightRoutes"));
+app.use("/train", require("./routes/trainRoutes"));
 app.use(errorHandler);
 
 module.exports = app;
