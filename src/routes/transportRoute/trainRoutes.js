@@ -6,7 +6,7 @@ const {
   GetTrainById,
   DeleteTrain,
   TrainBySearch,
-} = require("../controllers/trainController");
+} = require("../../controllers/transportController/trainController");
 
 const router = express.Router();
 

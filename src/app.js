@@ -7,9 +7,12 @@ connectDb();
 const app = express();
 app.use(express.json());
 app.use(cors());
-app.use("/bus", require("./routes/busRoutes"));
-app.use("/flight", require("./routes/flightRoutes"));
-app.use("/train", require("./routes/trainRoutes"));
+app.use("/bus", require("./routes/transportRoute/busRoutes"));
+app.use("/flight", require("./routes/transportRoute/flightRoutes"));
+app.use("/train", require("./routes/transportRoute/trainRoutes"));
+app.use("/busticket", require("./routes/ticketRoute/BusTicketRoute"));
+app.use("/flightticket", require("./routes/ticketRoute/FlightTicketRoute"));
+app.use("/trainticket", require("./routes/ticketRoute/TrainTicketRoute"));
 app.use(errorHandler);
 
 module.exports = app;

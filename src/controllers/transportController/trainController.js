@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const trainData = require("../models/trainModel");
+const trainData = require("../../models/transportModel/trainModel");
 
 const GetTrain = asyncHandler(async (req, res) => {
   try {

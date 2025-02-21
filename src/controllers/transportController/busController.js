@@ -1,6 +1,6 @@
 const asyncHandler = require("express-async-handler");
 // const BusModel = require("../models/Bus");
-const BusModel = require("../models/busModel");
+const BusModel = require("../../models/transportModel/busModel");
 
 //@desc get all buses
 //@route GET api/Bus

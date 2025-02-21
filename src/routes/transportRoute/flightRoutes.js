@@ -7,7 +7,7 @@ const {
   flightById,
   updateFlight,
   deleteFlight,
-} = require("../controllers/flightController");
+} = require("../../controllers/transportController/flightController");
 const router = express.Router();
 
 router.route("/").get(getflight);

@@ -6,7 +6,7 @@ const {
   updateBus,
   deleteBus,
   searchBus,
-} = require("../controllers/busController");
+} = require("../../controllers/transportController/busController");
 const router = express.Router();
 
 router.route("/").get(getAllBuses);

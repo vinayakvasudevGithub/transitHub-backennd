@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const flightData = require("../models/flightModel");
+const flightData = require("../../models/transportModel/flightModel");
 // const { query } = require("express");
 
 //desc get flight details
