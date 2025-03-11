@@ -20,6 +20,11 @@ const userSchema = new mongoose.Schema({
 });
 
 const busTicketSchema = new mongoose.Schema({
+  user_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "User",
+  },
   busdetails: [busSchema],
   userDetails: [userSchema],
 });
