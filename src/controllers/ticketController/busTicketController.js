@@ -24,7 +24,7 @@ const createBusTicket = asyncHandler(async (req, res) => {
   const ticket = new busTicket({
     busdetails,
     userDetails,
-    user_id: req.user.id,
+    // user_id: req.user.id,
   });
 
   // Save the ticket to the database
