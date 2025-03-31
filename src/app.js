@@ -9,7 +9,15 @@ connectDb();
 const app = express();
 app.use(express.json());
 
-app.use(cors());
+app.use(
+  cors({
+    credentials: true,
+    origin: "http://localhost:5173",
+  })
+);
+
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: false }));
 
 //transpost
 app.use("/bus", require("./routes/transportRoute/busRoutes"));
@@ -20,6 +28,12 @@ app.use("/train", require("./routes/transportRoute/trainRoutes"));
 app.use("/busticket", require("./routes/ticketRoute/BusTicketRoute"));
 app.use("/flightticket", require("./routes/ticketRoute/FlightTicketRoute"));
 app.use("/trainticket", require("./routes/ticketRoute/TrainTicketRoute"));
+
+// auth
+app.use("/auth", require("./routes/authRoute/authRoute"));
+
+// conatct
+app.use("/contact", require("./routes/ticketRoute/contactRoute"));
 
 app.use(errorHandler);
 
