@@ -1,6 +1,8 @@
 const asyncHandler = require("express-async-handler");
 // const BusModel = require("../models/Bus");
 const BusModel = require("../../models/transportModel/busModel");
+const jwt = require("jsonwebtoken");
+const busModel = require("../../models/transportModel/busModel");
 
 //@desc get all buses
 //@route GET api/Bus
@@ -56,28 +58,52 @@ const searchBus = asyncHandler(async (req, res) => {
 // Create a new bus (Admin only)
 //@route POST api/Bus/create
 const createBus = asyncHandler(async (req, res) => {
-  const { busname, busnumber, AC, stations, seatdetails, ticketprices } =
-    req.body;
-
-  if (
-    !busname ||
-    !busnumber ||
-    !AC ||
-    !stations ||
-    !seatdetails ||
-    !ticketprices
-  ) {
-    res.status(400);
-    throw new Error("Please provide all required fields");
-  }
-
   try {
+    const { token } = req.cookies;
+
+    if (!token) {
+      return res.status(401).json({ error: "not authorized" });
+    }
+
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET_ADMIN);
+
+    const adminId = decoded.id;
+    const adminName = decoded.name;
+
+    const { busname, busnumber, AC, stations, seatdetails, ticketprices } =
+      req.body;
+
+    if (
+      !busname ||
+      !busnumber ||
+      !AC ||
+      !stations ||
+      !seatdetails ||
+      !ticketprices
+    ) {
+      res.status(400);
+      throw new Error("Please provide all required fields");
+    }
+
     const existingBus = await BusModel.findOne({ busnumber });
     if (existingBus) {
       res.status(400);
       throw new Error("Bus with the same number already exists");
     }
-    const bus = await BusModel.create(req.body);
+
+    const bus = await BusModel.create({
+      user: {
+        id: adminId,
+        transithubUser: adminName,
+      },
+      busname,
+      busnumber,
+      AC,
+      stations,
+      seatdetails,
+      ticketprices,
+    });
+
     console.log(`New bus created: ${bus.busname} (Number: ${bus.busnumber})`);
     res.status(201).json(bus);
   } catch (error) {
@@ -87,6 +113,53 @@ const createBus = asyncHandler(async (req, res) => {
       .json({ tilte: `Failed to create bus`, message: `${error.message}` });
   }
 });
+
+const getBusByAdmin = asyncHandler(async (req, res) => {
+  try {
+    const { token } = req.cookies;
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET_ADMIN);
+    const busByAdmin = await busModel.find({ "user.id": decoded.id });
+    res.json(busByAdmin);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "server error" });
+  }
+});
+
+// // Create a new bus (Admin only)
+// //@route POST api/Bus/create
+// const createBus = asyncHandler(async (req, res) => {
+//   const { busname, busnumber, AC, stations, seatdetails, ticketprices } =
+//     req.body;
+
+//   if (
+//     !busname ||
+//     !busnumber ||
+//     !AC ||
+//     !stations ||
+//     !seatdetails ||
+//     !ticketprices
+//   ) {
+//     res.status(400);
+//     throw new Error("Please provide all required fields");
+//   }
+
+//   try {
+//     const existingBus = await BusModel.findOne({ busnumber });
+//     if (existingBus) {
+//       res.status(400);
+//       throw new Error("Bus with the same number already exists");
+//     }
+//     const bus = await BusModel.create(req.body);
+//     console.log(`New bus created: ${bus.busname} (Number: ${bus.busnumber})`);
+//     res.status(201).json(bus);
+//   } catch (error) {
+//     console.error("Error creating bus:", error.message);
+//     res
+//       .status(400)
+//       .json({ tilte: `Failed to create bus`, message: `${error.message}` });
+//   }
+// });
 
 //@desc get buses by id
 //@route GET api/Bus/:id
@@ -151,4 +224,5 @@ module.exports = {
   getBusById,
   updateBus,
   deleteBus,
+  getBusByAdmin,
 };

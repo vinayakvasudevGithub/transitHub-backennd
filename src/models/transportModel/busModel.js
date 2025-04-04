@@ -21,6 +21,16 @@ const prices = new mongoose.Schema({
 });
 
 const busSchema = new mongoose.Schema({
+  user: {
+    id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "adminpanel",
+      required: true,
+    },
+    transithubUser: {
+      type: String,
+    },
+  },
   busname: String,
   busnumber: String,
   bustype: String,

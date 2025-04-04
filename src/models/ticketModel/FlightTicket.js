@@ -17,6 +17,7 @@ const arrivalSchema = new mongoose.Schema({
   arrivalDate: String,
   arrivalTime: String,
 });
+
 const flightSchema = new mongoose.Schema({
   departure: [departureSchema],
   arrival: [arrivalSchema],
@@ -32,6 +33,16 @@ const userSchema = new mongoose.Schema({
 
 const flightTicketSchema = new mongoose.Schema({
   airlineTicketId: String,
+  user: {
+    id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+      required: true,
+    },
+    transithubUser: {
+      type: String,
+    },
+  },
   flightDetails: [flightSchema],
   userDetails: [userSchema],
   price: String,

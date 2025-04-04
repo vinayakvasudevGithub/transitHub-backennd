@@ -123,4 +123,5 @@ const profile = asyncHandler(async (req, res) => {
     });
   });
 });
+
 module.exports = { register, allUser, login, profile };

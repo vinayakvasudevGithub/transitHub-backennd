@@ -35,6 +35,9 @@ app.use("/auth", require("./routes/authRoute/authRoute"));
 // conatct
 app.use("/contact", require("./routes/ticketRoute/contactRoute"));
 
+//admin
+app.use("/admin", require("./routes/authRoute/adminRoute"));
+
 app.use(errorHandler);
 
 module.exports = app;
