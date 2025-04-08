@@ -65,16 +65,24 @@ const createBus = asyncHandler(async (req, res) => {
       return res.status(401).json({ error: "not authorized" });
     }
 
-    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET_ADMIN);
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
     const adminId = decoded.id;
     const adminName = decoded.name;
 
-    const { busname, busnumber, AC, stations, seatdetails, ticketprices } =
-      req.body;
+    const {
+      busname,
+      bustype,
+      busnumber,
+      AC,
+      stations,
+      seatdetails,
+      ticketprices,
+    } = req.body;
 
     if (
       !busname ||
+      !bustype ||
       !busnumber ||
       !AC ||
       !stations ||
@@ -97,6 +105,7 @@ const createBus = asyncHandler(async (req, res) => {
         transithubUser: adminName,
       },
       busname,
+      bustype,
       busnumber,
       AC,
       stations,
@@ -117,7 +126,7 @@ const createBus = asyncHandler(async (req, res) => {
 const getBusByAdmin = asyncHandler(async (req, res) => {
   try {
     const { token } = req.cookies;
-    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET_ADMIN);
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
     const busByAdmin = await busModel.find({ "user.id": decoded.id });
     res.json(busByAdmin);
   } catch (error) {

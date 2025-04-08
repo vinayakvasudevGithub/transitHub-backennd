@@ -24,7 +24,7 @@ const busSchema = new mongoose.Schema({
   user: {
     id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "adminpanel",
+      ref: "user",
       required: true,
     },
     transithubUser: {

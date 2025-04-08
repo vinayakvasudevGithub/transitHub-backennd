@@ -2,6 +2,7 @@ const asyncHandler = require("express-async-handler");
 const userModel = require("../../models/userModel/userModel");
 const jwt = require("jsonwebtoken");
 const { hashPassword, comparePassword } = require("../../utils/passwordHash");
+const busModel = require("../../models/transportModel/busModel");
 
 const allUser = asyncHandler(async (req, res) => {
   const users = await userModel.find();
@@ -94,34 +95,78 @@ const login = asyncHandler(async (req, res) => {
   }
 });
 
+// const profile = asyncHandler(async (req, res) => {
+//   const { token } = req.cookies;
+
+//   // 1. No token provided
+//   if (!token) {
+//     return res.status(401).json({
+//       success: false,
+//       message: "Unauthorized: No token provided",
+//     });
+//   }
+
+//   // 2. Verify JWT
+//   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, {}, (err, decodedUser) => {
+//     if (err) {
+//       console.error("JWT Verification Error:", err);
+//       return res.status(401).json({
+//         success: false,
+//         message: "Unauthorized: Invalid or expired token",
+//       });
+//     }
+
+//     // 3. Return minimal safe user data
+//     const { id, name, email } = decodedUser;
+//     res.status(200).json({
+//       success: true,
+//       user: { id, name, email },
+//     });
+//   });
+// });
+
 const profile = asyncHandler(async (req, res) => {
-  const { token } = req.cookies;
+  try {
+    const { token } = req.cookies;
 
-  // 1. No token provided
-  if (!token) {
-    return res.status(401).json({
-      success: false,
-      message: "Unauthorized: No token provided",
-    });
-  }
-
-  // 2. Verify JWT
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, {}, (err, decodedUser) => {
-    if (err) {
-      console.error("JWT Verification Error:", err);
+    if (!token) {
       return res.status(401).json({
         success: false,
-        message: "Unauthorized: Invalid or expired token",
+        message: "Unauthorized: No token provided",
       });
     }
 
-    // 3. Return minimal safe user data
+    // Using promise version of jwt.verify
+    const decodedUser = await new Promise((resolve, reject) => {
+      jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+        if (err) reject(err);
+        else resolve(decoded);
+      });
+    });
+
     const { id, name, email } = decodedUser;
-    res.status(200).json({
+    const buses = await busModel.find({ "user.id": id });
+
+    return res.status(200).json({
       success: true,
       user: { id, name, email },
+      buses,
     });
-  });
+  } catch (error) {
+    console.error("Admin Profile Error:", error);
+
+    if (error.name === "JsonWebTokenError") {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized: Invalid token",
+      });
+    }
+
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
 });
 
 module.exports = { register, allUser, login, profile };
