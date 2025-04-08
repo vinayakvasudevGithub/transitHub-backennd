@@ -8,84 +8,145 @@ This is the backend for a transport booking application where users can book bus
 
 This backend project is built using the following technologies and libraries:
 
-### 🔧 Runtime & Framework
+🔧 Runtime & Framework
+_Node.js_ JavaScript runtime environment
 
-- **Node.js** – JavaScript runtime environment
-- **Express.js** – Fast and minimalist web framework for Node.js
+_Express.js_ – Fast and minimalist web framework for Node.js
 
-### 🗃️ Database & ODM
+🗃️ Database & ODM
+_MongoDB_ – NoSQL database
 
-- **MongoDB** – NoSQL database
-- **Mongoose** – Elegant MongoDB object modeling for Node.js
+_Mongoose_ – Elegant MongoDB object modeling for Node.js
 
-### 🔐 Authentication & Security
+🔐 Authentication & Security
+_bcrypt_ – Password hashing for user authentication
 
-- **bcrypt** – Password hashing for user authentication
-- **jsonwebtoken** – For secure authentication using JWT tokens
-- **cookie-parser** – Parses cookies attached to the client request
+_jsonwebtoken_ – For secure authentication using JWT tokens
 
-### ⚙️ Environment & Configuration
+_cookie-parser_ – Parses cookies attached to the client request
 
-- **dotenv** – Loads environment variables from `.env` file
-- **cors** – Enables Cross-Origin Resource Sharing
+⚙️ Environment & Configuration
+_dotenv_ – Loads environment variables from .env file
 
-### 🛠️ Utilities
+_cors_ – Enables Cross-Origin Resource Sharing
 
-- **express-async-handler** – Simplifies error handling in async/await routes
-- **nodemon** – Automatically restarts the server during development
+🛠️ Utilities
+_express-async-handler_ – Simplifies error handling in async/await routes
+
+_nodemon_ – Automatically restarts the server during development
+
+---
+
+## 📡 API Endpoints
+
+_✈️ Flight Routes_
+• GET /flight – Get all flights
+• GET /flight/:id – Get flight by ID
+• GET /flight/search?from=tokyo&to=hiroshima – Search flights by origin and destination
+• POST /flight/create – Create a new flight
+• PUT /flight/update/:id – Update flight
+• DELETE /flight/delete/:id – Delete flight
+
+_🚌 Bus Routes_
+• GET /bus – Get all buses
+• GET /bus/:id – Get bus by ID
+• GET /bus/search?from=kannur&to=mukkam – Search buses by origin and destination
+• POST /bus/create – Create a new bus
+• PUT /bus/update/:id – Update bus
+• DELETE /bus/delete/:id – Delete bus
+
+_🚆 Train Routes_
+• GET /train – Get all trains
+• GET /train/:id – Get train by ID
+• GET /train/search?from=kannur&to=kozhikode – Search trains by origin and destination
+• POST /train/create – Create a new train
+• PUT /train/update/:id – Update train
+• DELETE /train/delete/:id – Delete train
+
+_🎟️ Ticket Booking_
+
+# 🚌 Bus Tickets
+
+• GET /busticket – Get all booked bus tickets
+• GET /busticket/user – Get user’s bus tickets (requires login)
+• POST /busticket/booking – Book a bus ticket
+• POST /busticket/delete/:id – Delete a bus ticket
+
+# ✈️ Flight Tickets
+
+• GET /flightticket – Get all booked flight tickets
+• GET /flightticket/user – Get user’s flight tickets (requires login)
+• POST /flightticket/booking – Book a flight ticket
+• POST /flightticket/delete/:id – Delete a flight ticket
+
+# 🚆 Train Tickets
+
+• GET /trainticket – Get all booked train tickets
+• GET /trainticket/user – Get user’s train tickets (requires login)
+• POST /trainticket/booking – Book a train ticket
+• POST /trainticket/delete/:id – Delete a train ticket
+
+# 🔐 Authentication
+
+• GET /auth/alluser – Get all users
+• GET /auth/profile – Get current user profile (via cookies)
+• POST /auth/register – Register a new user
+• POST /auth/login – Login user
 
 ---
 
 ## 📁 Folder Structure
 
+```
 backend/
 ├── config/
-│ ├── constants.js
-│ └── DbConnection.js
+│   ├── constants.js
+│   └── DbConnection.js
 │
 ├── controllers/
-│ ├── authController/
-│ │ └── AuthController.js
-│ ├── ticketController/
-│ │ ├── busTicketController.js
-│ │ ├── flightTicketController.js
-│ │ └── trainTicketController.js
-│ └── transportController/
-│ ├── busController.js
-│ ├── flightController.js
-│ └── trainController.js
+│   ├── authController/
+│   │   └── AuthController.js
+│   ├── ticketController/
+│   │   ├── busTicketController.js
+│   │   ├── flightTicketController.js
+│   │   └── trainTicketController.js
+│   └── transportController/
+│       ├── busController.js
+│       ├── flightController.js
+│       └── trainController.js
 │
 ├── middlewares/
-│ ├── authMiddleware.js
-│ └── errorHandler.js
+│   ├── authMiddleware.js
+│   └── errorHandler.js
 │
 ├── models/
-│ ├── ticketModel/
-│ │ ├── BusTicket.js
-│ │ ├── FlightTicket.js
-│ │ └── TrainTicket.js
-│ ├── transportModel/
-│ │ ├── busModel.js
-│ │ ├── flightModel.js
-│ │ └── trainModel.js
-│ └── userModel/
-│ └── userModel.js
+│   ├── ticketModel/
+│   │   ├── BusTicket.js
+│   │   ├── FlightTicket.js
+│   │   └── TrainTicket.js
+│   ├── transportModel/
+│   │   ├── busModel.js
+│   │   ├── flightModel.js
+│   │   └── trainModel.js
+│   └── userModel/
+│       └── userModel.js
 │
 ├── routes/
-│ ├── authRoute/
-│ │ └── authRoute.js
-│ ├── ticketRoute/
-│ │ ├── BusTicketRoute.js
-│ │ ├── FlightTicketRoute.js
-│ │ └── TrainTicketRoute.js
-│ └── transportRoute/
-│ ├── busRoutes.js
-│ ├── flightRoutes.js
-│ └── trainRoute.js
+│   ├── authRoute/
+│   │   └── authRoute.js
+│   ├── ticketRoute/
+│   │   ├── BusTicketRoute.js
+│   │   ├── FlightTicketRoute.js
+│   │   └── TrainTicketRoute.js
+│   └── transportRoute/
+│       ├── busRoutes.js
+│       ├── flightRoutes.js
+│       └── trainRoute.js
 │
 ├── utils/
-│ └── passwordHash.js
+│   └── passwordHash.js
 │
 ├── app.js
 ├── server.js
 └── README.md
+```

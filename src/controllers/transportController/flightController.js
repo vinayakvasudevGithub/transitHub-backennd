@@ -11,7 +11,7 @@ const getflight = asyncHandler(async (req, res) => {
 });
 
 //get flight by query params
-//route GET http://localhost:4001/flight/search?from=kannur&to=kochi
+//route GET http://localhost:2001/flight/search?from=kannur&to=kochi
 const flightBySearch = asyncHandler(async (req, res) => {
   const data = await flightData.find();
 
