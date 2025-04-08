@@ -6,7 +6,39 @@ This is the backend for a transport booking application where users can book bus
 
 ## 📦 Tech Stack
 
-This backend project is built using the following technologies and libraries:
+🔧 Runtime & Framework
+
+Node.js
+
+Express.js
+
+🗃️ Database & ODM
+
+MongoDB
+
+Mongoose
+
+🔐 Authentication & Security
+
+bcrypt
+
+jsonwebtoken (JWT)
+
+cookie-parser
+
+⚙️ Environment & Configuration
+
+dotenv
+
+cors
+
+🛠️ Utilities
+
+express-async-handler
+
+nodemon
+
+<!-- This backend project is built using the following technologies and libraries:
 
 🔧 Runtime & Framework
 _Node.js_ JavaScript runtime environment
@@ -33,7 +65,7 @@ _cors_ – Enables Cross-Origin Resource Sharing
 🛠️ Utilities
 _express-async-handler_ – Simplifies error handling in async/await routes
 
-_nodemon_ – Automatically restarts the server during development
+_nodemon_ – Automatically restarts the server during development -->
 
 ---
 
