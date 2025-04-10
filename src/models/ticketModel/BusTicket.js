@@ -9,6 +9,7 @@ const busSchema = new mongoose.Schema({
   bustype: String,
   arrivaltime: String,
   departureTime: String,
+  price: Number,
 });
 
 const userSchema = new mongoose.Schema({
@@ -19,19 +20,22 @@ const userSchema = new mongoose.Schema({
   mobile: String,
 });
 
-const busTicketSchema = new mongoose.Schema({
-  user: {
-    id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "user",
-      required: true,
+const busTicketSchema = new mongoose.Schema(
+  {
+    user: {
+      id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "user",
+        required: true,
+      },
+      transithubUser: {
+        type: String,
+      },
     },
-    transithubUser: {
-      type: String,
-    },
+    busdetails: [busSchema],
+    userDetails: [userSchema],
   },
-  busdetails: [busSchema],
-  userDetails: [userSchema],
-});
+  { timestamps: true }
+);
 
 module.exports = mongoose.model("busTickets", busTicketSchema);
