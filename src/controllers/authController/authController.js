@@ -3,6 +3,7 @@ const userModel = require("../../models/userModel/userModel");
 const jwt = require("jsonwebtoken");
 const { hashPassword, comparePassword } = require("../../utils/passwordHash");
 const busModel = require("../../models/transportModel/busModel");
+const BusTicket = require("../../models/ticketModel/BusTicket");
 
 const allUser = asyncHandler(async (req, res) => {
   const users = await userModel.find();
@@ -146,11 +147,13 @@ const profile = asyncHandler(async (req, res) => {
 
     const { id, name, email } = decodedUser;
     const buses = await busModel.find({ "user.id": id });
+    const busTickets = await BusTicket.find({ "user.id": id });
 
     return res.status(200).json({
       success: true,
       user: { id, name, email },
       buses,
+      busTickets,
     });
   } catch (error) {
     console.error("Admin Profile Error:", error);

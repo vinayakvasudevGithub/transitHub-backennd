@@ -5,9 +5,16 @@ const connectDb = require("./config/DbConnections");
 const dotenv = require("dotenv").config();
 const cookieParser = require("cookie-parser");
 
+// const Razorpay = require("razorpay");
+
 connectDb();
 const app = express();
 app.use(express.json());
+
+// const instance = new Razorpay({
+//   key_id: process.env.RAZORPAY_KEY_ID,
+//   key_secret: process.env.RAZORPAY_KEY_SECRET,
+// });
 
 app.use(
   cors({
@@ -18,6 +25,9 @@ app.use(
 
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
+
+//payment
+app.use("/payment", require("./routes/paymentRoute/paymentRoute"));
 
 //transpost
 app.use("/bus", require("./routes/transportRoute/busRoutes"));
